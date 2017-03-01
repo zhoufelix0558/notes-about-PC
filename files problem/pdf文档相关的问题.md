@@ -12,5 +12,10 @@ File->Preference->Documents->Allow Multiple Instances
 然后关闭文件，用新保存的替换之前的pdf文件，之后再打开。
 这时候就能自由编辑保存了（不知道对所有的文件是否都有效）。
 
+3/1/2017 11:31:27 AM 
+ATTENTION！！！
+今天才发现为什么保存到其他位置pdf文件就能正常写注释了，原来是因为我把文件所在的文件夹设置为read-only了。
+真是好尴尬。
+
 
 
