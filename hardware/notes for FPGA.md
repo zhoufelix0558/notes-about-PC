@@ -1,3 +1,18 @@
+###Quartus怎么做仿真？
+3/3/2017 11:04:35 PM 
+调了半天，发现Quartus自带的ModelSim-Altera不好用，最后看网上Quarus 可以直接调用Modelsim
+参见《ModelSim初学者教程.pdf》或者
+1. 建立好项目，并且顺利编译。
+2. Processing->Start->Start Test Bench Template Writer(Verilog HDL生成的文件后缀名为.vt，位于工程文件夹simulatin/modelsim中)。在里面加上测试代码（诸如#100 axxx之类的）。
+	testbench中的module名称可以更改（例：add_testbench）
+	testbench规定输入一律为reg型变量，输出为wire型。可以有不可综合的语句；for，while等。
+3. Tools->Options->EDA Tool Options.将ModelSim指向ModelSim.exe安装路径（比如X：/modeltech_10.0c/win64）
+4. Assignments->Settings->Simulation->Compile test bench进入Test Benches...
+	benchname写成testbench文件中的model名。File Name指向想要添加的testbench文件（说明能同时建立很多个testbench文件）。
+5. Tools->Run EDA Simulation Tool->EDA RTL Simulation，然后ModelSim就会被调用起来自动仿真波形。
+
+
+
 ###Quartus注意事项
 3/3/2017 8:50:21 PM 
 1. 项目不能有中文路径名。
