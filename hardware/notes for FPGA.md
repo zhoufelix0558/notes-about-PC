@@ -1,3 +1,10 @@
+###关于module和testbench输入输出所用的类型的问题
+在module中，input一定是wire，output可以是wire也可以是reg。
+在testbench中，input是reg，output是wire。
+基本上两者是相反的。
+这样simulation就能跑通了
+
+
 ###Quartus II怎么支持SystemVerilog？
 打开菜单Assignment->Setting->Analysis & Synthesis Settings->Verilog HDL Input。在里面将verilog version选成SystemVerilog
 SystemVerilog的新功能详见https://zh.wikipedia.org/wiki/SystemVerilog
