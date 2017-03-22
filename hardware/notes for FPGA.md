@@ -1,3 +1,81 @@
+###SystemVerilog和generate并行赋值语法的完整代码
+normal_operation.v
+```
+`timescale 1ns/1ps
+
+
+module normal_operation(clk,data_in,data_out);
+input clk;
+input[8:0][8:0] data_in;
+output reg[8:0][8:0] data_out;
+
+always@(posedge clk);
+
+genvar i,j; 
+generate 
+for( i=0; i<8; i=i+1 ) 
+begin : outer 
+//    for (j=0;  j<8; j=j+1 ) 
+//        begin : inner 
+        assign data_out[i][7:0] = data_in[i][7:0]+1; 		//程序做到了完全实时，wire型连线
+    end 
+//end 
+endgenerate
+
+
+endmodule
+```
+
+normal_op_testbench.vt
+```
+`timescale 1ns/1ps
+
+
+module normal_op_testbench;
+
+	// Inputs
+reg clk;
+reg[8:0][8:0] data_in;
+wire[8:0][8:0] data_out;
+
+	// Instantiate the Unit Under Test (UUT)
+normal_operation notest(
+.clk(clk),
+.data_in(data_in),
+.data_out(data_out)
+);
+
+	initial begin
+		// Initialize Inputs
+		clk = 0;
+		data_in[0] = 8'd12;
+	
+		// Wait 100 ns for global reset to finish
+		#100;     
+		// Add stimulus here
+		data_in[1] = 8'd23;
+		data_in[3] = 8'd40;
+		#1
+		data_in[1] = 8'd33;
+		data_in[4] = 8'hff; 
+		#2
+		data_in[2] = 8'd45;		
+		#3
+		data_in[2] = 8'd78;
+		
+		#2000;
+      //$stop;
+	end
+   
+   always #0.5 clk = ~ clk; //产生1ns的时钟
+
+   
+endmodule
+```
+
+###Quartus II怎么缩放波形图
+通过键盘键中的"+"和"-"键来缩放波形。
+
 ###关于module和testbench输入输出所用的类型的问题
 在module中，input一定是wire，output可以是wire也可以是reg。
 在testbench中，input是reg，output是wire。
