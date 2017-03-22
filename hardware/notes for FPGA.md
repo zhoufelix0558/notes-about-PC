@@ -1,3 +1,34 @@
+###Quartus II怎么支持SystemVerilog？
+打开菜单Assignment->Setting->Analysis & Synthesis Settings->Verilog HDL Input。在里面将verilog version选成SystemVerilog
+SystemVerilog的新功能详见https://zh.wikipedia.org/wiki/SystemVerilog
+
+###generate的妙用。
+一般verilog中不能定义多位数组，但是SystemVerilog是支持这个功能的。
+```
+`timescale 1ns/1ps
+module normal_operation(clk,data_in,data_out);
+input clk;
+input[8:0][8:0] data_in;
+output reg[8:0][8:0] data_out;
+
+always@(posedge clk);
+
+	genvar i,j; 
+	generate 
+	for( i=0; i<8; i=i+1 ) 
+	begin : outer 
+	    for (j=0;  j<8; j=j+1 ) 
+	        begin : inner 
+	        assign data_out[i][j] = data_in[7-i][7-j]; 
+	    end 
+	end 
+	endgenerate
+endmodule
+```
+
+
+
+
 ###当使用ModelSim® 10.2编译Quartus® II 12.1 SP1库时会看到该错误。请注意Quartus® II 12.1 SP1官方支持ModelSim10.1b。
 (vlog-2244) Variable 'mega' is implicitly static. You must explicitly declare it as static or automatic.
 另外,对于Verilog HDL仿真,编辑文件<Quartus II installation directory>/eda/sim_lib/altera_lnsim.sv。添加automatic到1150行和10397行。
