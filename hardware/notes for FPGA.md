@@ -1,3 +1,17 @@
+###当使用ModelSim® 10.2编译Quartus® II 12.1 SP1库时会看到该错误。请注意Quartus® II 12.1 SP1官方支持ModelSim10.1b。
+(vlog-2244) Variable 'mega' is implicitly static. You must explicitly declare it as static or automatic.
+另外,对于Verilog HDL仿真,编辑文件<Quartus II installation directory>/eda/sim_lib/altera_lnsim.sv。添加automatic到1150行和10397行。
+line 1158:
+            automatic integer mega = 1000000;
+line 10397:
+            automatic real factor = 10**9;
+ 对于VHDL仿真,通过以下命令隐藏错误信息:
+vlog -sv -suppress 2244 altera_lnsim_for_vhdl.sv
+
+
+
+
+
 ###Quartus怎么做仿真？
 3/3/2017 11:04:35 PM 
 调了半天，发现Quartus自带的ModelSim-Altera不好用，最后看网上Quarus 可以直接调用Modelsim
