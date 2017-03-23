@@ -1,3 +1,17 @@
+###怎么禁止Quartus禁止优化未使用的reg变量。
+```
+`define LENGTH 15000
+(* keep *) reg[`LENGTH-1:0] testdemo;
+```
+不同的软件可能禁止优化的指令不一样。
+
+Cyclone IV EP4CE115有11480个逻辑单元。
+Total logic elements	15,000 / 15,408 ( 97 % )
+Total combinational functions	15,000 / 15,408 ( 97 % )
+Dedicated logic registers	15,000 / 15,408 ( 97 % )
+Total registers	15000
+
+
 ###SignalTap一直报错的原因：
 这个bug是我自己造成的，但是发现起来比较困难。
 SignalTap使用的时候系统会调用自己库文件`...\altera\12.1\quartus\libraries\megafunctions\sld_signaltap.vhd`
