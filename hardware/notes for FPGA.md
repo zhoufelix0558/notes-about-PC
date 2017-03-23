@@ -1,3 +1,25 @@
+###SignalTap一直报错的原因：
+这个bug是我自己造成的，但是发现起来比较困难。
+SignalTap使用的时候系统会调用自己库文件`...\altera\12.1\quartus\libraries\megafunctions\sld_signaltap.vhd`
+后来我无意中错按了键盘（后来我才知道是我错案了键盘），保存了文件，就再也编译不过去了。
+一直出现：Error (10500): VHDL syntax error at Vhdl1.vhd(218) near text "generic",expecting "entity", or "architecture", or "use", or "library", or "package", or "configuration".
+我不懂VHDL语言，所以一直google这个问题，发现没有人遇到过这种问题。。。
+
+后来发现sld_signaltap.vhd同目录下有一个sld_signaltap.vhd.bak。（原来Quartus界面下修改vhd文件后会将修改前的文件备份，这个功能好赞）。
+对比后发现
+sld_signaltap.vhd（20549bytes）
+sld_signaltap.vhd.bak（20596bytes）
+通过软件的智能对比发现原本的代码是
+```
+entity sld_signaltap is
+generic(
+```
+被我无意间删去了上半句，变成了
+```
+generic(
+```
+把文件变回来就行了。
+
 ###SystemVerilog和generate并行赋值语法的完整代码
 normal_operation.v
 ```
